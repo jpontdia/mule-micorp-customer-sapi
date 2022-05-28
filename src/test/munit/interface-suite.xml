@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger"
+	xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
+	<munit:config name="interface-suite.xml" minMuleVersion="4.3.0" />
+	
+	<http:request-config name="http_local_configuration" doc:name="HTTP Request configuration" doc:id="258e2986-047c-49dc-9cb7-e0d05a96abbe" >
+		<http:request-connection host="localhost" port="8081" />
+	</http:request-config>
+	
+	<validation:config name="Validation_Config" doc:name="Validation Config" doc:id="9ec64e9e-c01b-40bc-9f9a-3f1f15de5424" />
+	
+	<munit:test name="customer-crud" doc:id="f03fdfac-06a5-402b-a005-415c94235a69" ignore="false">
+
+		<munit:enable-flow-sources>            
+	        <munit:enable-flow-source value="customer-api"/>
+	        <munit:enable-flow-source value="get:\customers:order-api-config"/>
+	       	<munit:enable-flow-source value="get:\customers\(customerId):order-api-config"/>
+	        <munit:enable-flow-source value="delete:\customers\(customerId):order-api-config"/>
+	        <munit:enable-flow-source value="post:\customers:application\json:order-api-config"/>
+	  	</munit:enable-flow-sources>
+
+		<munit:behavior >
+			<munit:set-event doc:name="Set Event" doc:id="f020964b-6f69-4f2a-8e4d-a90209b00606" >
+				<munit:payload value="#[&#10;%dw 2.0&#10;output application/json&#10;---&#10;readUrl('classpath://post/set-event_payload.dwl')]" />
+				<munit:variables >
+					<munit:variable key="sourcePayload" value="#[&#10;%dw 2.0&#10;output application/json&#10;---&#10;readUrl('classpath://post/set-event_payload.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			
+			<json-logger:log-start doc:name="Start" doc:id="9b133bf5-8c3e-4237-a9d1-4ce216e90725" config-ref="JSON_Logger_Config" message="CRUD testing for Customer"/>
+			<flow-ref doc:name="getCustomer by name" doc:id="6bef3711-e796-4eb1-b9e8-1e7295b3cc96" name="getCustomerByName"/>
+			<choice doc:name="Customer Exist?" doc:id="b895cc86-580d-4984-bc5b-c62a690794cb" >
+				<when expression="payload[0] != null">
+					<flow-ref doc:name="deleteCustomer" doc:id="accb4c66-8880-41c3-88a6-8e8c286f8a47" name="deleteCustomer"/>
+				</when>
+			</choice>
+			<flow-ref doc:name="create Customer" doc:id="9d5b9c0a-0578-4009-a182-68b466a9a404" name="createCustomer"/>
+			<flow-ref doc:name="Verify Data" doc:id="d7d6bfda-0a2d-400d-8d65-e3fbba3d4c5b" name="verifyData"/>
+			<json-logger:log-end doc:name="End" doc:id="31c8feaa-6eb2-4515-abb6-0e3adc5b9c0b" config-ref="JSON_Logger_Config" message="CRUD testing for Customer"/>
+		</munit:execution>
+	</munit:test>
+	<sub-flow name="getCustomerByName" doc:id="93a3bf8a-fd23-43cb-814a-e4e5ce3ee79a" >
+		<set-variable value="#[payload.lastName]" doc:name="lastName" doc:id="e636ede2-242f-4a4c-b945-6198edc4d528" variableName="lastName" />
+		<set-variable value="#[payload.firstName]" doc:name="firstName" doc:id="272d71a7-3092-4ddf-a8e7-5b4f23033725" variableName="firstName" />
+		<http:request method="GET" doc:name="get Customer By FirstName and LastName" doc:id="cf619315-ac29-43be-a6bc-9929ede997d1" config-ref="http_local_configuration" path="/api/customers" >
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Content-Type" : "application/json"
+}]]]></http:headers>
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"lastName" : vars.lastName,
+	"firstName" : vars.firstName
+}]]]></http:query-params>
+			<http:response-validator >
+				<http:success-status-code-validator values="200" />
+			</http:response-validator>
+		</http:request>
+		<json-logger:log-after doc:name="Show Customers" doc:id="44dfaa7a-94cb-48f0-bad2-43d63dacfff6" config-ref="JSON_Logger_Config" message="After calling get Customer By FirstName and LastName" />
+	</sub-flow>
+	<sub-flow name="verifyData" doc:id="c4a3cfb1-33ff-4a99-8929-4cfeba5e8328" >
+		<json-logger:log-start doc:name="Verify created data" doc:id="e3188a76-04f1-4fda-8456-b577bb3627ab" config-ref="JSON_Logger_Config" message='#["Testing the new resource, get data for: " ++ vars.customerId]' />
+		<http:request method="GET" doc:name="get resource by id" doc:id="3863bb3e-4aa9-40aa-b27c-f3c67e526bc4" config-ref="http_local_configuration" path='#["/api/customers/" ++ vars.customerId]' >
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"customerId" : vars.customerId
+}]]]></http:uri-params>
+		</http:request>
+		<json-logger:log-flow doc:name="Resource Data" doc:id="d97322cd-1d2e-4d40-8d48-dd61de5c7b15" config-ref="JSON_Logger_Config" message="Resource data" />
+	</sub-flow>
+	<sub-flow name="deleteCustomer" doc:id="255698ed-c463-4cd2-89bd-bf89ff146fb8" >
+		<json-logger:log-flow doc:name="delete" doc:id="158cde73-c3f6-4aa4-9c8e-9a27898ea3d9" config-ref="JSON_Logger_Config" message="Customer exist on database, delete it" />
+		<set-variable value="#[payload[0].customerId]" doc:name="customerId" doc:id="a27d9541-1a5b-410e-951c-42541017afa2" variableName="customerId" />
+		<json-logger:log-flow doc:name="customerId" doc:id="c6e76452-d27e-4600-8cbb-1a1695f91a6b" config-ref="JSON_Logger_Config" message='#["To delete customerId: " ++ vars.customerId]'/>
+		<http:request method="DELETE" doc:name="DELETE" doc:id="f013d04a-31b4-4d85-94a5-51a9b655aea5" config-ref="http_local_configuration" path="/api/customers/{customerId}" >
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Content-Type" : "application/json"
+}]]]></http:headers>
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"customerId" : vars.customerId
+}]]]></http:uri-params>
+			<http:response-validator >
+				<http:success-status-code-validator values="200" />
+			</http:response-validator>
+		</http:request>
+		<validation:is-true doc:name="status deleted?" doc:id="459369fd-26e9-4a6a-b7bc-765e36d4ca44" config-ref="Validation_Config" expression="#[attributes.statusCode == 200]" />
+	</sub-flow>
+	<sub-flow name="createCustomer" doc:id="54d96c84-4b29-40b4-85d9-8d4966043ac1" >
+		<set-payload value="#[vars.sourcePayload]" doc:name="payload" doc:id="8de2abaf-a13e-48ef-a75a-ad548471adac" />
+		<json-logger:log-flow doc:name="create" doc:id="5aa1c785-f2a8-4a0c-8eb3-a26c05c68ec1" config-ref="JSON_Logger_Config" message="Create Customer" />
+		<http:request method="POST" doc:name="POST" doc:id="ad560c3c-ec11-4f6f-b7d8-6fe8f7ba90f7" config-ref="http_local_configuration" path="/api/customers" >
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Content-Type" : "application/json"
+}]]]></http:headers>
+			<http:response-validator >
+				<http:success-status-code-validator values="201,409" />
+			</http:response-validator>
+		</http:request>
+		<validation:is-true doc:name="status Created?" doc:id="d662a49b-6390-4147-b515-8bb59d11180a" config-ref="Validation_Config" expression="#[attributes.statusCode == 201]" />
+		<ee:transform doc:name="get customerId" doc:id="01c908df-cebe-4f94-b10e-2233f5b9c022" >
+			<ee:message />
+			<ee:variables >
+				<ee:set-variable variableName="customerId" ><![CDATA[%dw 2.0
+import dw::core::Strings
+var location = attributes.headers.location
+---
+if (location != null ) 
+    (location Strings::substringAfterLast "/")
+else null
+]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<json-logger:log-flow doc:name="new customerId" doc:id="f35f147e-c9af-492a-8b71-1fa75f7ca798" config-ref="JSON_Logger_Config" message='#["New customerId: " ++ vars.customerId]' />
+		<set-payload value="#[vars.sourcePayload]" doc:name="payload" doc:id="f5405e86-55db-4aee-a929-9f44340a3046" />
+		<http:request method="POST" doc:name="POST - Retry again" doc:id="69f195a1-1100-43fb-b39b-444efb94b1c9" config-ref="http_local_configuration" path="/api/customers" >
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Content-Type" : "application/json"
+}]]]></http:headers>
+			<http:response-validator >
+				<http:success-status-code-validator values="201,409" />
+			</http:response-validator>
+		</http:request>
+		<validation:is-true doc:name="status duplicated?" doc:id="fb717be0-6159-4799-bb97-86c4481b3739" config-ref="Validation_Config" expression="#[attributes.statusCode == 409]" />
+		<json-logger:log-flow doc:name="Customer Duplicated" doc:id="7cc183c9-c936-4db4-8249-ce389f6f4d5c" config-ref="JSON_Logger_Config" message="The Customer is already present in the database" />
+	</sub-flow>
+
+</mule>

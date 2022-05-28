@@ -1,0 +1,19 @@
+http:
+  port: "8081"
+  
+salesforce:
+  user: "![QkKjxb2kNk6xyiPo6fTRdiDIP+KlZzlnn2aghfJVWnc=]" 
+  password: "![2FgCjzygVyaV13KRS4iYGQ==]"
+  token: "![3xCktAbfKFOIzlHonWqpjCsq5pBHcfL6fEwIdduqhLs=]"
+  
+messages:
+  customer-doesnt-exist-relations: "Customer does not exist or has relations with other resources"
+  backend-error: "There was a problem while trying to access the backend repository"
+  customer-error: "There was a problme while trying to create the Customer"
+  apikit-400: "Bad request"
+  apikit-404: "Resource not found"
+  apikit-405: "Method not allowed"
+  apikit-406: "Not acceptable"
+  apikit-415: "Unsupported media type"
+  apikit-501: "Not Implemented"
+  
