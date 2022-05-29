@@ -38,3 +38,9 @@ environment variables must be configured with the proper values:
 * anypoint.platform.client_id. Anypoint Client Id
 
 > Note: Get the client id and secret from Anypoint Platform -> https://anypoint.mulesoft.com/accounts/. Select the organization and retrieve information.
+
+on mac example:
+```bash
+export encrypt_key=my-encryption-key
+mvn package -Dencrypt.key=$encrypt_key
+```
