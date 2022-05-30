@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.micorp</groupId>
+	<groupId>078efef1-d139-48ed-92f5-f8d4a0592374</groupId>
 	<artifactId>micorp-customer-sapi</artifactId>
 	<version>1.0.0</version>
 	<packaging>mule-application</packaging>
@@ -15,13 +15,13 @@
 		<app.runtime>4.4.0-20220321</app.runtime>
 		<munit.version>2.3.9</munit.version>
 		<mule.maven.plugin.version>3.5.4</mule.maven.plugin.version>
-		<!-- Deployment configuration to Mulesoft AnyPoint Platform -->
-		<!-- Deployment. Users and Password as Environment Variables -->
-		<!-- Set environment variables for 
-		export ANYPOINT_USER=my-anypoint-user
-		export ANYPOINT_PASSWORD=my-anypoint-password
-		export ENCRYPTION_KEY=mytoken-to-decript-configfile
-		 -->
+			
+		<!-- API Rest Connecto: micorp-customer-sapi -->
+		<restconnector.customer.sapi.group>${project.groupId}</restconnector.customer.sapi.group>
+		<restconnector.customer.sapi.artifact>customer-api</restconnector.customer.sapi.artifact>
+		<restconnector.customer.sapi.version>1.0.9</restconnector.customer.sapi.version>
+
+
 		<!-- Deployment. Service Configuration -->
 		<cloudhub.application.name>${project.name}</cloudhub.application.name>
 		<environment>Sandbox</environment>
@@ -47,6 +47,34 @@
 				<filtering>true</filtering>
 			</resource>
 		</resources>
+		<testResources>
+			<testResource>
+				<directory>${basedir}/src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
+		
+		<pluginManagement>
+			<plugins>
+				<!-- Maven resource plug-in to filter property files -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.2.0</version>
+					<configuration>
+						<!-- Exclude java certificates -->
+						<nonFilteredFileExtensions>
+							<nonFilteredFileExtension>p12</nonFilteredFileExtension>
+							<nonFilteredFileExtension>jks</nonFilteredFileExtension>
+							<nonFilteredFileExtension>pcm</nonFilteredFileExtension>
+							<nonFilteredFileExtension>cer</nonFilteredFileExtension>
+						</nonFilteredFileExtensions>
+					</configuration>
+				</plugin>
+
+			</plugins>
+		</pluginManagement>
+		
 		<plugins>
 			<plugin>
 				<groupId>org.mule.tools.maven</groupId>
@@ -103,6 +131,11 @@
 							<format>html</format>
 						</formats>
 					</coverage>
+		      		<environmentVariables>
+						<restconnector.customer.sapi.group>${restconnector.customer.sapi.group}</restconnector.customer.sapi.group>
+						<restconnector.customer.sapi.artifact>${restconnector.customer.sapi.artifact}</restconnector.customer.sapi.artifact>
+						<restconnector.customer.sapi.version>${restconnector.customer.sapi.version}</restconnector.customer.sapi.version>
+      				</environmentVariables>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -189,10 +222,11 @@
 			<version>2.0.1</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
+		
 		<dependency>
-			<groupId>078efef1-d139-48ed-92f5-f8d4a0592374</groupId>
-			<artifactId>customer-api</artifactId>
-			<version>1.0.8</version>
+			<groupId>${restconnector.customer.sapi.group}</groupId>
+			<artifactId>${restconnector.customer.sapi.artifact}</artifactId>
+			<version>${restconnector.customer.sapi.version}</version>
 			<classifier>raml</classifier>
 			<type>zip</type>
 		</dependency>
