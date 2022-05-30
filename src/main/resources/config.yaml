@@ -5,7 +5,12 @@ salesforce:
   user: "![QkKjxb2kNk6xyiPo6fTRdiDIP+KlZzlnn2aghfJVWnc=]" 
   password: "![2FgCjzygVyaV13KRS4iYGQ==]"
   token: "![3xCktAbfKFOIzlHonWqpjCsq5pBHcfL6fEwIdduqhLs=]"
-  
+
+# API ID for autodiscovery
+api:
+  id: "17868760"
+
+# Meesages
 messages:
   customer-doesnt-exist-relations: "Customer does not exist or has relations with other resources"
   backend-error: "There was a problem while trying to access the backend repository"
@@ -16,4 +21,3 @@ messages:
   apikit-406: "Not acceptable"
   apikit-415: "Unsupported media type"
   apikit-501: "Not Implemented"
-  

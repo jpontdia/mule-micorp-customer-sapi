@@ -12,9 +12,11 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<app.runtime>4.4.0-20220321</app.runtime>
-		<munit.version>2.3.9</munit.version>
-		<mule.maven.plugin.version>3.5.4</mule.maven.plugin.version>
+
+
+		<!-- Runtime configuration -->		
+		<app.runtime.server>4.4.0</app.runtime.server>
+		<app.runtime>${app.runtime.server}-20220420</app.runtime>
 
 		<!-- Properties for the json logger -->
 		<service.artifact>${project.artifactId}</service.artifact>
@@ -23,15 +25,16 @@
 		<!-- API Rest Connecto: micorp-customer-sapi -->
 		<restconnector.customer.sapi.group>${project.groupId}</restconnector.customer.sapi.group>
 		<restconnector.customer.sapi.artifact>micorp-customer-sapi</restconnector.customer.sapi.artifact>
-		<restconnector.customer.sapi.version>1.0.0</restconnector.customer.sapi.version>
+		<restconnector.customer.sapi.version>1.0.1</restconnector.customer.sapi.version>
 
 		<!-- Deployment. Service Configuration -->
-		<cloudhub.application.name>${project.name}</cloudhub.application.name>
-		<environment>Sandbox</environment>
 		<region>us-east-2</region>
 		<workers>1</workers>
 		<workerType>MICRO</workerType>
-		<muleVersion>4.4.0</muleVersion>
+		
+		<!-- Dependencies version -->
+		<munit.version>2.3.9</munit.version>
+		<mule.maven.plugin.version>3.5.4</mule.maven.plugin.version>
 
 	</properties>
 
@@ -67,17 +70,22 @@
 					<filterappdirectory>true</filterappdirectory>
 					<cloudHubDeployment>
 						<uri>https://anypoint.mulesoft.com</uri>
-						<muleVersion>${muleVersion}</muleVersion>
-						<applicationName>${cloudhub.application.name}</applicationName>
-						<environment>${environment}</environment>
+						<muleVersion>${app.runtime.server}</muleVersion>
+						<applicationName>${project.artifactId}</applicationName>
+						<environment>${deployment.env}</environment>
 						<region>${region}</region>
 						<workers>${workers}</workers>
+						<deploymentTimeout>600000</deploymentTimeout>
 						<workerType>${workerType}</workerType>
 						<objectStoreV2>true</objectStoreV2>
-						<username>${env.ANYPOINT_USER}</username>
-						<password>${env.ANYPOINT_PASSWORD}</password>
+						<connectedAppGrantType>client_credentials</connectedAppGrantType>
+						<connectedAppClientId>${ap.ca.client_id}</connectedAppClientId>
+						<connectedAppClientSecret>${ap.ca.client_secret}</connectedAppClientSecret>
 						<properties>
-							<encryption_key>${env.ENCRYPTION_KEY}</encryption_key>
+							<anypoint.platform.client_id>${ap.client_id}</anypoint.platform.client_id>
+							<anypoint.platform.client_secret>${ap.client_secret}</anypoint.platform.client_secret>
+							<env>${deployment.env}</env>
+							<encrypt.key>${encrypt.key}</encrypt.key>
 						</properties>
 					</cloudHubDeployment>
 					<classifier>mule-application</classifier>
