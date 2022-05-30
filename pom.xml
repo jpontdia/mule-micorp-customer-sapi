@@ -15,12 +15,15 @@
 		<app.runtime>4.4.0-20220321</app.runtime>
 		<munit.version>2.3.9</munit.version>
 		<mule.maven.plugin.version>3.5.4</mule.maven.plugin.version>
-			
+
+		<!-- Properties for the json logger -->
+		<service.artifact>${project.artifactId}</service.artifact>
+		<service.version>${project.version}</service.version>
+
 		<!-- API Rest Connecto: micorp-customer-sapi -->
 		<restconnector.customer.sapi.group>${project.groupId}</restconnector.customer.sapi.group>
-		<restconnector.customer.sapi.artifact>customer-api</restconnector.customer.sapi.artifact>
-		<restconnector.customer.sapi.version>1.0.9</restconnector.customer.sapi.version>
-
+		<restconnector.customer.sapi.artifact>micorp-customer-sapi</restconnector.customer.sapi.artifact>
+		<restconnector.customer.sapi.version>1.0.0</restconnector.customer.sapi.version>
 
 		<!-- Deployment. Service Configuration -->
 		<cloudhub.application.name>${project.name}</cloudhub.application.name>
@@ -53,27 +56,6 @@
 				<filtering>true</filtering>
 			</testResource>
 		</testResources>
-		
-		<pluginManagement>
-			<plugins>
-				<!-- Maven resource plug-in to filter property files -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-resources-plugin</artifactId>
-					<version>3.2.0</version>
-					<configuration>
-						<!-- Exclude java certificates -->
-						<nonFilteredFileExtensions>
-							<nonFilteredFileExtension>p12</nonFilteredFileExtension>
-							<nonFilteredFileExtension>jks</nonFilteredFileExtension>
-							<nonFilteredFileExtension>pcm</nonFilteredFileExtension>
-							<nonFilteredFileExtension>cer</nonFilteredFileExtension>
-						</nonFilteredFileExtensions>
-					</configuration>
-				</plugin>
-
-			</plugins>
-		</pluginManagement>
 		
 		<plugins>
 			<plugin>
@@ -132,6 +114,8 @@
 						</formats>
 					</coverage>
 		      		<environmentVariables>
+		      			<service.artifact>${service.artifact}</service.artifact>
+						<service.version>${service.version}</service.version>
 						<restconnector.customer.sapi.group>${restconnector.customer.sapi.group}</restconnector.customer.sapi.group>
 						<restconnector.customer.sapi.artifact>${restconnector.customer.sapi.artifact}</restconnector.customer.sapi.artifact>
 						<restconnector.customer.sapi.version>${restconnector.customer.sapi.version}</restconnector.customer.sapi.version>
@@ -142,12 +126,6 @@
 	</build>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.mule.connectors</groupId>
-			<artifactId>mule-sockets-connector</artifactId>
-			<version>1.2.2</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
 		<dependency>
 			<groupId>org.mule.modules</groupId>
 			<artifactId>mule-apikit-module</artifactId>

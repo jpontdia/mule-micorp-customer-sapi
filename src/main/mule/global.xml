@@ -55,8 +55,8 @@ http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mu
 		doc:name="JSON Logger Config"
 		doc:id="4986fc6c-ca43-40aa-ae2a-112fbabd761e"
 		environment="local"
-		applicationName="micorp-customer-sapi"
-		applicationVersion="1.0.1" />
+		applicationName="${service.artifact}"
+		applicationVersion="${service.version}" />
 	
 	
 	<global-property

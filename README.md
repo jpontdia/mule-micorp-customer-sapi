@@ -42,5 +42,11 @@ environment variables must be configured with the proper values:
 on mac example:
 ```bash
 export encrypt_key=my-encryption-key
-mvn package -Dencrypt.key=$encrypt_key
+mvn clean package -Dencrypt.key=$encrypt_key
 ```
+
+## Recommended content
+* [To Configure MUnit Maven Plugin From the POM File](https://docs.mulesoft.com/munit/2.0/to-configure-munit-maven-plugin-maven)
+
+---
+[Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
