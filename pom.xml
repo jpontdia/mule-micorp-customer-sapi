@@ -13,7 +13,18 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+		<!-- Deployment properties -->
+		<deployment.env>local</deployment.env>
+		<deployment.prefix></deployment.prefix>
+		<deployment.suffix></deployment.suffix>
+		<deployment.name>${deployment.prefix}${project.artifactId}${deployment.suffix}</deployment.name>
 
+		<!-- Visualizer properties -->
+		<api.layer>process</api.layer>		
+		<anypoint.platform.config.analytics.agent.enabled>true</anypoint.platform.config.analytics.agent.enabled>
+		<anypoint.platform.visualizer.displayName>${project.artifactId}</anypoint.platform.visualizer.displayName>
+		<anypoint.platform.visualizer.layer>${api.layer}</anypoint.platform.visualizer.layer>
+		
 		<!-- Runtime configuration -->		
 		<app.runtime.server>4.4.0</app.runtime.server>
 		<app.runtime>${app.runtime.server}-20220420</app.runtime>
@@ -70,9 +81,9 @@
 					<filterappdirectory>true</filterappdirectory>
 					<cloudHubDeployment>
 						<uri>https://anypoint.mulesoft.com</uri>
-						<muleVersion>${app.runtime.server}</muleVersion>
-						<applicationName>${project.artifactId}</applicationName>
+						<applicationName>${deployment.name}</applicationName>
 						<environment>${deployment.env}</environment>
+						<muleVersion>${app.runtime.server}</muleVersion>						
 						<region>${region}</region>
 						<workers>${workers}</workers>
 						<deploymentTimeout>600000</deploymentTimeout>
