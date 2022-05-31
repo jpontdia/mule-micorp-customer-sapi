@@ -2,6 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<parent>
+		<groupId>078efef1-d139-48ed-92f5-f8d4a0592374</groupId>
+		<artifactId>micorp-pom</artifactId>
+		<version>1.0.0</version>
+		<relativePath/>
+		<!--  <relativePath>../mule-micorp-pom/pom.xml</relativePath>-->
+		
+	</parent>
+	
 	<groupId>078efef1-d139-48ed-92f5-f8d4a0592374</groupId>
 	<artifactId>micorp-customer-sapi</artifactId>
 	<version>1.0.0</version>
@@ -10,216 +19,38 @@
 	<name>mule-micorp-customer-sapi</name>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-		<!-- Deployment properties -->
-		<deployment.env>local</deployment.env>
-		<deployment.prefix></deployment.prefix>
-		<deployment.suffix></deployment.suffix>
-		<deployment.name>${deployment.prefix}${project.artifactId}${deployment.suffix}</deployment.name>
-
 		<!-- Visualizer properties -->
-		<api.layer>process</api.layer>		
-		<anypoint.platform.config.analytics.agent.enabled>true</anypoint.platform.config.analytics.agent.enabled>
-		<anypoint.platform.visualizer.displayName>${project.artifactId}</anypoint.platform.visualizer.displayName>
-		<anypoint.platform.visualizer.layer>${api.layer}</anypoint.platform.visualizer.layer>
+		<api.layer>system</api.layer>
 		
-		<!-- Runtime configuration -->		
-		<app.runtime.server>4.4.0</app.runtime.server>
-		<app.runtime>${app.runtime.server}-20220420</app.runtime>
-
-		<!-- Properties for the json logger -->
-		<service.artifact>${project.artifactId}</service.artifact>
-		<service.version>${project.version}</service.version>
-
 		<!-- API Rest Connecto: micorp-customer-sapi -->
 		<restconnector.customer.sapi.group>${project.groupId}</restconnector.customer.sapi.group>
 		<restconnector.customer.sapi.artifact>micorp-customer-sapi</restconnector.customer.sapi.artifact>
 		<restconnector.customer.sapi.version>1.0.1</restconnector.customer.sapi.version>
-
-		<!-- Deployment. Service Configuration -->
-		<region>us-east-2</region>
-		<workers>1</workers>
-		<workerType>MICRO</workerType>
-		
-		<!-- Dependencies version -->
-		<munit.version>2.3.9</munit.version>
-		<mule.maven.plugin.version>3.5.4</mule.maven.plugin.version>
-
 	</properties>
 
 	<build>
-		<resources>
-			<resource>
-				<directory>${basedir}/src/main/mule</directory>
-				<filtering>true</filtering>
-			</resource>
-			<resource>
-				<directory>${basedir}/src/main/mule/implementations</directory>
-				<filtering>true</filtering>
-			</resource>
-			<resource>
-				<directory>${basedir}/src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
-		<testResources>
-			<testResource>
-				<directory>${basedir}/src/test/resources</directory>
-				<filtering>true</filtering>
-			</testResource>
-		</testResources>
-		
 		<plugins>
-			<plugin>
-				<groupId>org.mule.tools.maven</groupId>
-				<artifactId>mule-maven-plugin</artifactId>
-				<version>${mule.maven.plugin.version}</version>
-				<extensions>true</extensions>
-				<configuration>
-					<filterappdirectory>true</filterappdirectory>
-					<cloudHubDeployment>
-						<uri>https://anypoint.mulesoft.com</uri>
-						<applicationName>${deployment.name}</applicationName>
-						<environment>${deployment.env}</environment>
-						<muleVersion>${app.runtime.server}</muleVersion>						
-						<region>${region}</region>
-						<workers>${workers}</workers>
-						<deploymentTimeout>600000</deploymentTimeout>
-						<workerType>${workerType}</workerType>
-						<objectStoreV2>true</objectStoreV2>
-						<connectedAppGrantType>client_credentials</connectedAppGrantType>
-						<connectedAppClientId>${ap.ca.client_id}</connectedAppClientId>
-						<connectedAppClientSecret>${ap.ca.client_secret}</connectedAppClientSecret>
-						<properties>
-							<anypoint.platform.client_id>${ap.client_id}</anypoint.platform.client_id>
-							<anypoint.platform.client_secret>${ap.client_secret}</anypoint.platform.client_secret>
-							<env>${deployment.env}</env>
-							<encrypt.key>${encrypt.key}</encrypt.key>
-						</properties>
-					</cloudHubDeployment>
-					<classifier>mule-application</classifier>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>3.0.0</version>
-			</plugin>
 			<plugin>
 				<groupId>com.mulesoft.munit.tools</groupId>
 				<artifactId>munit-maven-plugin</artifactId>
-				<version>${munit.version}</version>
-				<executions>
-					<execution>
-						<id>test</id>
-						<phase>test</phase>
-						<goals>
-							<goal>test</goal>
-							<goal>coverage-report</goal>
-						</goals>
-					</execution>
-				</executions>
 				<configuration>
-					<runtimeVersion>${app.runtime}</runtimeVersion>
-					<argLines>
-						<argLine>-Xmx2048m</argLine>
-					</argLines>
-					<coverage>
-						<runCoverage>true</runCoverage>
-						<formats>
-							<format>html</format>
-						</formats>
-					</coverage>
-		      		<environmentVariables>
-		      			<service.artifact>${service.artifact}</service.artifact>
+					<environmentVariables>
+						<service.artifact>${service.artifact}</service.artifact>
 						<service.version>${service.version}</service.version>
 						<restconnector.customer.sapi.group>${restconnector.customer.sapi.group}</restconnector.customer.sapi.group>
 						<restconnector.customer.sapi.artifact>${restconnector.customer.sapi.artifact}</restconnector.customer.sapi.artifact>
 						<restconnector.customer.sapi.version>${restconnector.customer.sapi.version}</restconnector.customer.sapi.version>
-      				</environmentVariables>
+					</environmentVariables>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.mule.modules</groupId>
-			<artifactId>mule-apikit-module</artifactId>
-			<version>1.5.12</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.connectors</groupId>
-			<artifactId>mule-http-connector</artifactId>
-			<version>1.7.1</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>com.mulesoft.modules</groupId>
-			<artifactId>mule-secure-configuration-property-module</artifactId>
-			<version>1.2.3</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.modules</groupId>
-			<artifactId>mule-json-module</artifactId>
-			<version>2.1.6</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>078efef1-d139-48ed-92f5-f8d4a0592374</groupId>
-			<artifactId>json-logger</artifactId>
-			<version>3.0.0</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>com.mulesoft.munit</groupId>
-			<artifactId>munit-runner</artifactId>
-			<version>2.3.9</version>
-			<classifier>mule-plugin</classifier>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.mulesoft.munit</groupId>
-			<artifactId>munit-tools</artifactId>
-			<version>2.3.9</version>
-			<classifier>mule-plugin</classifier>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.weave</groupId>
-			<artifactId>assertions</artifactId>
-			<version>1.0.2</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.mulesoft.connectors</groupId>
-			<artifactId>mule-amqp-connector</artifactId>
-			<version>1.7.4</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.connectors</groupId>
-			<artifactId>mule-jms-connector</artifactId>
-			<version>1.8.3</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>com.mulesoft.connectors</groupId>
-			<artifactId>mule-salesforce-connector</artifactId>
-			<version>10.14.5</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.modules</groupId>
-			<artifactId>mule-validation-module</artifactId>
-			<version>2.0.1</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		
+	
+		<!-- Service Dependencies  -->	
+	
+		<!-- RAML: Micorp Customer SAPI -->
 		<dependency>
 			<groupId>${restconnector.customer.sapi.group}</groupId>
 			<artifactId>${restconnector.customer.sapi.artifact}</artifactId>
@@ -227,33 +58,30 @@
 			<classifier>raml</classifier>
 			<type>zip</type>
 		</dependency>
+
+		<!-- JSON Logger dependencies -->
+		<dependency>
+			<groupId>com.mulesoft.connectors</groupId>
+			<artifactId>mule-amqp-connector</artifactId>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.mule.connectors</groupId>
+			<artifactId>mule-jms-connector</artifactId>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>078efef1-d139-48ed-92f5-f8d4a0592374</groupId>
+			<artifactId>json-logger</artifactId>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		
+		<!-- Salesforce connector -->
+		<dependency>
+			<groupId>com.mulesoft.connectors</groupId>
+			<artifactId>mule-salesforce-connector</artifactId>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>anypoint-exchange-v3</id>
-			<name>Anypoint Exchange</name>
-			<url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
-			<layout>default</layout>
-		</repository>
-		<repository>
-			<id>mulesoft-releases</id>
-			<name>MuleSoft Releases Repository</name>
-			<url>https://repository.mulesoft.org/releases/</url>
-			<layout>default</layout>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>mulesoft-releases</id>
-			<name>MuleSoft Releases Repository</name>
-			<layout>default</layout>
-			<url>https://repository.mulesoft.org/releases/</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
-
 </project>
