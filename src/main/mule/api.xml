@@ -5,13 +5,13 @@
             <http:response statusCode="#[vars.httpStatus default 200]">
                 <http:headers>#[vars.outboundHeaders default {}]</http:headers>
             </http:response>
-            <http:error-response statusCode="#[vars.httpStatus default 500]">
+            <http:error-response statusCode="#[vars.httpStatus default 500]"> 
                 <http:body>#[payload]</http:body>
                 <http:headers>#[vars.outboundHeaders default {}]</http:headers>
-            </http:error-response>
+            </http:error-response> 
         </http:listener>
         <apikit:router config-ref="api-config" />
-		<error-handler ref="global-error-handler" />
+		<error-handler ref="global-error-handler"/>
     </flow>
     <flow name="api-console">
         <http:listener config-ref="api-httpListenerConfig" path="/console/*">
@@ -19,10 +19,10 @@
                 <http:headers>#[vars.outboundHeaders default {}]</http:headers>
             </http:response>
             <http:error-response statusCode="#[vars.httpStatus default 500]">
-                <http:body>#[payload]</http:body>
+                <http:body>#[payload]</http:body> 
                 <http:headers>#[vars.outboundHeaders default {}]</http:headers>
             </http:error-response>
-        </http:listener>
+        </http:listener> 
         <apikit:console config-ref="api-config" />
 		<error-handler ref="global-error-handler" />
     </flow>

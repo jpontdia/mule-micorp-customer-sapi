@@ -5,9 +5,8 @@
 	<parent>
 		<groupId>078efef1-d139-48ed-92f5-f8d4a0592374</groupId>
 		<artifactId>micorp-pom</artifactId>
-		<version>1.0.0</version>
-		<relativePath/>
-		<!--  <relativePath>../mule-micorp-pom/pom.xml</relativePath>-->
+		<version>1.0.1</version>
+		<relativePath>../mule-micorp-pom-test/pom.xml</relativePath>
 		
 	</parent>
 	
@@ -22,10 +21,10 @@
 		<!-- Visualizer properties -->
 		<api.layer>system</api.layer>
 		
-		<!-- API Rest Connecto: micorp-customer-sapi -->
-		<restconnector.customer.sapi.group>${project.groupId}</restconnector.customer.sapi.group>
-		<restconnector.customer.sapi.artifact>micorp-customer-sapi</restconnector.customer.sapi.artifact>
-		<restconnector.customer.sapi.version>1.0.1</restconnector.customer.sapi.version>
+		<!-- API Spec Rest Connector: customer-item-sapi -->
+		<restconnector.api.spec.group>${project.groupId}</restconnector.api.spec.group>
+		<restconnector.api.spec.artifact>micorp-customer-sapi</restconnector.api.spec.artifact>
+		<restconnector.api.spec.version>1.0.1</restconnector.api.spec.version>
 	</properties>
 
 	<build>
@@ -35,11 +34,9 @@
 				<artifactId>munit-maven-plugin</artifactId>
 				<configuration>
 					<environmentVariables>
-						<service.artifact>${service.artifact}</service.artifact>
-						<service.version>${service.version}</service.version>
-						<restconnector.customer.sapi.group>${restconnector.customer.sapi.group}</restconnector.customer.sapi.group>
-						<restconnector.customer.sapi.artifact>${restconnector.customer.sapi.artifact}</restconnector.customer.sapi.artifact>
-						<restconnector.customer.sapi.version>${restconnector.customer.sapi.version}</restconnector.customer.sapi.version>
+						<restconnector.api.spec.group>${restconnector.api.spec.group}</restconnector.api.spec.group>
+						<restconnector.api.spec.artifact>${restconnector.api.spec.artifact}</restconnector.api.spec.artifact>
+						<restconnector.api.spec.version>${restconnector.api.spec.version}</restconnector.api.spec.version>
 					</environmentVariables>
 				</configuration>
 			</plugin>
@@ -52,9 +49,9 @@
 	
 		<!-- RAML: Micorp Customer SAPI -->
 		<dependency>
-			<groupId>${restconnector.customer.sapi.group}</groupId>
-			<artifactId>${restconnector.customer.sapi.artifact}</artifactId>
-			<version>${restconnector.customer.sapi.version}</version>
+			<groupId>${restconnector.api.spec.group}</groupId>
+			<artifactId>${restconnector.api.spec.artifact}</artifactId>
+			<version>${restconnector.api.spec.version}</version>
 			<classifier>raml</classifier>
 			<type>zip</type>
 		</dependency>

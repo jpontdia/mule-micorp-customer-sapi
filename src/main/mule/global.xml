@@ -34,7 +34,7 @@ http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mu
 
 	<apikit:config
 		name="api-config"
-		api="resource::${restconnector.customer.sapi.group}:${restconnector.customer.sapi.artifact}:${restconnector.customer.sapi.version}:raml:zip:api.raml"
+		api="${api.spec}"
 		outboundHeadersMapName="outboundHeaders"
 		httpStatusVarName="httpStatus" />
 
@@ -51,26 +51,11 @@ http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mu
 		file="config.yaml"
 		key="${encrypt.key}" />
 
-
-	<json-logger:config
-		name="JSON_Logger_Config"
-		doc:name="JSON Logger Config"
-		doc:id="34848090-dfaf-40bb-90b4-14822ee08a39"
-		environment="${env}"
-		applicationName="${service.artifact}"
-		applicationVersion="${service.version}" />
-
-
 	<global-property
 		doc:name="Global Property"
 		doc:id="18df1160-6341-4c46-b882-61008eaf49d8"
 		name="env"
 		value="local" />
-
-	<validation:config
-		name="Validation_Config"
-		doc:name="Validation Config"
-		doc:id="ef305466-5381-4aa2-a02f-008f16bb2c8d" />
 
 	<api-gateway:autodiscovery
 		apiId="${api.id}"
@@ -78,4 +63,17 @@ http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mu
 		doc:name="API Autodiscovery"
 		doc:id="92853cfc-bbfd-4e5c-9973-c2dbfd5d57e3"
 		flowRef="api-main" />
+
+	<json-logger:config
+		name="JSON_Logger_Config"
+		doc:name="JSON Logger Config"
+		doc:id="34848090-dfaf-40bb-90b4-14822ee08a39"
+		environment="${env}"
+		applicationName="${project.artifact}"
+		applicationVersion="${project.version}" />
+
+	<validation:config
+		name="Validation_Config"
+		doc:name="Validation Config"
+		doc:id="ef305466-5381-4aa2-a02f-008f16bb2c8d" />
 </mule>

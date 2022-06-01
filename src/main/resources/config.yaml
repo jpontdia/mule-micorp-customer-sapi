@@ -1,15 +1,24 @@
 http:
   port: "8081"
-  
+
+# The project artifact and version data 
+project:
+  artifact: "${project.artifactId}"
+  version: "${project.version}"
+    
 salesforce:
   user: "![QkKjxb2kNk6xyiPo6fTRdiDIP+KlZzlnn2aghfJVWnc=]" 
   password: "![2FgCjzygVyaV13KRS4iYGQ==]"
   token: "![3xCktAbfKFOIzlHonWqpjCsq5pBHcfL6fEwIdduqhLs=]"
 
-# API ID for autodiscovery
-api:
+# API Specification and autodiscovery
+api:  
+  group: "${restconnector.api.spec.group}"
+  artifact: "${restconnector.api.spec.artifact}"
+  version: "${restconnector.api.spec.version}"
+  spec: "resource::${api.group}:${api.artifact}:${api.version}:raml:zip:api.raml"
   id: "17868760"
-
+  
 # Meesages
 messages:
   customer-doesnt-exist-relations: "Customer does not exist or has relations with other resources"
