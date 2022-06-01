@@ -6,7 +6,8 @@
 		<groupId>078efef1-d139-48ed-92f5-f8d4a0592374</groupId>
 		<artifactId>micorp-pom</artifactId>
 		<version>1.0.1</version>
-		<relativePath>../mule-micorp-pom-test/pom.xml</relativePath>
+		<relativePath/>
+		<!--  <relativePath>../mule-micorp-pom-test/pom.xml</relativePath> -->
 		
 	</parent>
 	
