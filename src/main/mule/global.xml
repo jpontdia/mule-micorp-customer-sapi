@@ -63,7 +63,7 @@ http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mu
 		doc:name="API Autodiscovery"
 		doc:id="92853cfc-bbfd-4e5c-9973-c2dbfd5d57e3"
 		flowRef="api-main" />
-
+	
 	<json-logger:config
 		name="JSON_Logger_Config"
 		doc:name="JSON Logger Config"

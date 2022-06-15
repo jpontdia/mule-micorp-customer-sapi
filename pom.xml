@@ -8,7 +8,6 @@
 		<version>1.0.1</version>
 		<relativePath/>
 		<!--  <relativePath>../mule-micorp-pom-test/pom.xml</relativePath> -->
-		
 	</parent>
 	
 	<groupId>078efef1-d139-48ed-92f5-f8d4a0592374</groupId>
@@ -45,10 +44,9 @@
 	</build>
 
 	<dependencies>
-	
-		<!-- Service Dependencies  -->	
-	
-		<!-- RAML: Micorp Customer SAPI -->
+		<!-- Service Dependencies  -->
+		
+		<!-- RAML: micorp-customer-sapi -->
 		<dependency>
 			<groupId>${restconnector.api.spec.group}</groupId>
 			<artifactId>${restconnector.api.spec.artifact}</artifactId>
@@ -73,7 +71,6 @@
 			<artifactId>json-logger</artifactId>
 			<classifier>mule-plugin</classifier>
 		</dependency>
-		
 		<!-- Salesforce connector -->
 		<dependency>
 			<groupId>com.mulesoft.connectors</groupId>
@@ -82,4 +79,12 @@
 		</dependency>
 
 	</dependencies>
+	<repositories>
+		<repository>
+			<id>anypoint-exchange-v3</id>
+			<name>Anypoint Exchange V3</name>
+			<url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
 </project>
