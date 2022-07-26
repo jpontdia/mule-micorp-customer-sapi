@@ -1,3 +1,4 @@
+# Listening port of the serivce
 http:
   port: "8081"
 
@@ -5,13 +6,14 @@ http:
 project:
   artifact: "${project.artifactId}"
   version: "${project.version}"
-    
-salesforce:
-  user: "![QkKjxb2kNk6xyiPo6fTRdiDIP+KlZzlnn2aghfJVWnc=]" 
-  password: "![2FgCjzygVyaV13KRS4iYGQ==]"
-  token: "![3xCktAbfKFOIzlHonWqpjCsq5pBHcfL6fEwIdduqhLs=]"
 
-# API Specification and autodiscovery
+# Salesfoce authentication    
+salesforce:
+  user: "MyUser" 
+  password: "MyPassword"
+  token: "MyToken"
+
+# The RAML API and autodiscovery
 api:  
   group: "${restconnector.api.spec.group}"
   artifact: "${restconnector.api.spec.artifact}"

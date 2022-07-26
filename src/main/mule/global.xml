@@ -19,9 +19,9 @@ http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mu
 		name="Salesforce_Config"
 		doc:name="Salesforce Config">
 		<salesforce:basic-connection
-			username="${secure::salesforce.user}"
-			password="${secure::salesforce.password}"
-			securityToken="${secure::salesforce.token}" />
+			username="${salesforce.user}"
+			password="${salesforce.password}"
+			securityToken="${salesforce.token}" />
 	</salesforce:sfdc-config>
 
 
@@ -49,7 +49,8 @@ http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mu
 		name="Secure_Properties_Config"
 		doc:name="Secure Properties Config"
 		file="config.yaml"
-		key="${encrypt.key}" />
+		key="${encrypt.key}" >
+	</secure-properties:config>
 
 	<global-property
 		doc:name="Global Property"

@@ -3,6 +3,9 @@
   "secureProperties": [
   	"anypoint.platform.client_id",
   	"anypoint.platform.client_secret",
-  	"encrypt.key"
+  	"encrypt.key",
+  	"salesforce.user",
+  	"salesforce.password",
+  	"salesforce.token"
   ]
 }

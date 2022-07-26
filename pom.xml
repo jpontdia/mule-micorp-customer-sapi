@@ -5,9 +5,9 @@
 	<parent>
 		<groupId>078efef1-d139-48ed-92f5-f8d4a0592374</groupId>
 		<artifactId>micorp-pom</artifactId>
-		<version>1.0.2</version>
+		<version>1.0.6</version>
 		<relativePath/>
-		<!--  <relativePath>../mule-micorp-pom-test/pom.xml</relativePath> -->
+		<!--  <relativePath>../mule-micorp-pom/pom.xml</relativePath> -->
 	</parent>
 	
 	<groupId>078efef1-d139-48ed-92f5-f8d4a0592374</groupId>
@@ -77,14 +77,5 @@
 			<artifactId>mule-salesforce-connector</artifactId>
 			<classifier>mule-plugin</classifier>
 		</dependency>
-
 	</dependencies>
-	<repositories>
-		<repository>
-			<id>anypoint-exchange-v3</id>
-			<name>Anypoint Exchange V3</name>
-			<url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
-			<layout>default</layout>
-		</repository>
-	</repositories>
 </project>
